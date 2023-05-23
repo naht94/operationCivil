@@ -1,0 +1,10 @@
+.certification{
+    border-top : dimgrey 1px;
+    border-bottom: dimgrey 1px;
+}
+.certification_title{
+    background-color: gray;
+}
+.certification_subject{
+    background-color: darkgrey;
+}

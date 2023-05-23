@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>family_certification</title>
+    <link rel="stylesheet" href="/resources/stylesheet.css">
+
+</head>
+<body>
+    <table class="certification">
+        <thead>
+        <tr class="certification_title">
+            <th colspan="5">
+                <p>가족관계증명서</p>
+                <p th:text="'(발급일 : ' + ${localDate} + ')' + ', 증명서 확인번호: ' + ${certificateConfirmationNumber}"></p>
+            </th>
+        </tr>
+        <tr>
+            <th class="certification_subject" colspan="2">
+                <p>등록기준지</p>
+                <p>(본적)</p>
+            </th>
+            <td colspan="3" th:text="${self.registrationBaseAddress}"></td>
+        </tr>
+        <tr>
+            <th class="certification_subject">구분</th>
+            <th class="certification_subject">성명</th>
+            <th class="certification_subject">출생연월일</th>
+            <th class="certification_subject">주민등록번호</th>
+            <th class="certification_subject">성별</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="본인"></td>
+            <td th:text="${self.name}"></td>
+            <td th:text="${#temporals.format(self.birthDate, 'yyyy년MM월dd일HH시mm분')}"></td>
+            <td th:text="${self.residentRegistrationNumber}"></td>
+            <td th:text="${self.genderCode}"></td>
+        </tr>
+        <tr th:each="familyMember : ${family}">
+            <td th:text="${familyMember.familyRelationshipCode}"></td>
+            <td th:text="${familyMember.FamilyResident.name}"></td>
+            <td th:text="${#temporals.format(familyMember.FamilyResident.birthDate, 'yyyy년MM월dd일HH시mm분')}"></td>
+            <td th:text="${familyMember.FamilyResident.residentRegistrationNumber}"></td>
+            <td th:text="${familyMember.FamilyResident.genderCode}"></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

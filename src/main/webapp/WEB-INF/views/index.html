@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주민목록</title>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+      <th>주민일련번호</th>
+      <th>성명</th>
+      <th>주민등록번호</th>
+      <th>성별코드</th>
+      <th>가족관계증명서</th>
+      <th>주민등록등본</th>
+      <th>출생신고서</th>
+      <th>사망신고서</th>
+      <th>삭제</th>
+  </tr>
+  </thead>
+    <div th:if="${residents != null}">
+        <tbody>
+        <tr th:each="civilian : ${residents.content}">
+            <td th:text="${civilian.residentSerialNumber}"></td>
+            <td th:text="${civilian.name}"></td>
+            <td th:text="${civilian.residentRegistrationNumber}"></td>
+            <td th:text="${civilian.genderCode}"></td>
+            <td><form class th:action="@{/family/civilian(id=${civilian.residentSerialNumber})}" method="post">
+                <button type="submit">가족관계증명서</button>
+            </form></td>
+            <td><form class th:action="@{/registration/civilian(id=${civilian.residentSerialNumber})}" method="post">
+                <button type="submit">주민등록등본</button>
+            </form></td>
+            <td><form class th:action="@{/birth/civilian(id=${civilian.residentSerialNumber})}" method="post">
+                <button type="submit">출생신고서</button>
+            </form></td>
+            <td><form class th:action="@{/death/civilian(id=${civilian.residentSerialNumber})}" method="post">
+                <button type="submit">사망신고서</button>
+            </form></td>
+            <td><form class th:action="@{/delete/civilian(id=${civilian.residentSerialNumber})}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">삭제</button>
+            </form></td>
+        </tr>
+        </tbody>
+    </div>
+</table>
+    <p><th:block th:insert="~{page/board_navigator :: boardinfo}"></th:block></p>
+</body>
+</html>

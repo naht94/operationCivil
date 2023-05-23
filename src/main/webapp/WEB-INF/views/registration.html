@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>registration</title>
+    <link rel="stylesheet" href="/resources/stylesheet.css">
+</head>
+<body>
+<table class="certification">
+    <thead>
+    <tr class="certification_title">
+        <th colspan="6">
+            <p>주민등록등본</p>
+            <p th:text="'(발급일 : ' + ${localDate} + ')' + ', 증명서 확인번호: ' + ${certificateConfirmationNumber}"></p>
+
+        </th>
+    </tr>
+    <tr>
+        <th class="certification_subject" colspan="2">
+            <p>세대주성명</p>
+        </th>
+        <td colspan="1" th:text="${household.Resident.name}"></td>
+        <th class="certification_subject" colspan="1" >
+            <p>세대구성</p>
+            <p>사유 및 날짜</p>
+        </th>
+        <td colspan="2">
+            <p th:text="${household.householdCompositionReasonCode}"></p>
+            <p th:text="${household.householdCompositionDate}"></p>
+        </td>
+    </tr>
+    <tr>
+        <th class="certification_subject" colspan="4">주소</th>
+        <th class="certification_subject" colspan="2">신고일</th>
+    </tr>
+    <div th:each="address : ${movementAddress}">
+        <tr>
+            <td th:text="${address.lastAddressYn == 'Y' ? '현주소' : '전주소'}"></td>
+            <td colspan="3" th:text="${address.houseMovementAddress}"></td>
+            <td colspan="2" th:text="${address.pk.houseMovementReportDate}"></td>
+        </tr>
+    </div>
+    <tr>
+        <th class="certification_subject">세대주 관계</th>
+        <th class="certification_subject">성명</th>
+        <th class="certification_subject" colspan="2">주민등록번호</th>
+        <th class="certification_subject">신고일</th>
+        <th class="certification_subject">변동사유</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${certification}">
+        <td th:text="${member.householdRelationshipCode}"></td>
+        <td th:text="${member.name}"></td>
+        <td colspan="2" th:text="${member.residentRegistrationNumber}"></td>
+        <td th:text="${member.reportDate}"></td>
+        <td th:text="${member.householdCompositionChangeReasonCode}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

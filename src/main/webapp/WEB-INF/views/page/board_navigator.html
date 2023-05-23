@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<div th:fragment="boardinfo">
+  <div th:if="${!residents.isEmpty()}">
+    <nav
+            th:with="
+                pageNumber = ${residents.pageable.pageNumber},
+                pageSize = ${residents.pageable.pageSize},
+                totalPages = ${residents.totalPages},
+                startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                tempEndPage = ${startPage + pageSize - 1},
+                endPage = (${tempEndPage > totalPages ? totalPages : tempEndPage})"
+            aria-label="Page navigation"
+    >
+      <ul class="pagination ">
+
+        <li th:classappend="${pageNumber + 1 <= pageSize + 1} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="@{/index(page=0)}">
+            <span>&laquo;</span>
+            <span class="sr-only">First</span>
+          </a>
+        </li>
+
+        <li th:classappend="${residents.first} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${residents.first} ? '#' : @{/index(page=${#numbers.formatDecimal(startPage - pageSize, 0, -1)})}" aria-label="Previous">
+            <span aria-hidden="true">&lt;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="page-link" th:href="@{/index(page=${page - 1})}"></a>
+        </li>
+
+        <li th:classappend="${pageNumber + 1 >= totalPages} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${pageNumber + 1 >= totalPages} ? '#' : @{/index(page=${#numbers.formatDecimal(pageNumber + 1 , 0, -1)})}" aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+
+        <li th:classappend=" ${T(java.lang.Math).floor(totalPages/10)*10 <= startPage} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="@{/index(page=${totalPages - 1})}">
+            <span>&raquo;</span>
+            <span class="sr-only">Last</span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</div>

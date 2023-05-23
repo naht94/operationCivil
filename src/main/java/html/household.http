@@ -1,0 +1,32 @@
+###세대 등록
+POST http://localhost:8080/household
+Content-Type: application/json
+
+{
+  "householdSerialNumber" : 2,
+  "residentSerialNumber" : 124,
+  "householdCompositionDate" : "2018-03-19",
+  "householdCompositionReasonCode" : "세대분리",
+  "currentHouseMovementAddress" : "광주광역시 동구 금남로 564번길"
+}
+###세대 삭제
+DELETE http://localhost:8080/household/2
+###세대 전입 주소 등록
+POST http://localhost:8080/household/2/movement
+Content-Type: application/json
+
+{
+  "houseMovementReportDate" : "2018-03-19",
+  "houseMovementAddress" : "광주광역시 남구 충장로 562번길",
+  "lastAddressYn" : "Y"
+}
+###세대 전입 주소 수정
+PUT http://localhost:8080/household/2/movement/20180319
+Content-Type: application/json
+
+{
+  "houseMovementAddress" : "광주광역시 동구 금남로 564번길",
+  "lastAddressYn" : "Y"
+}
+###세대 전입 주소 삭제
+DELETE http://localhost:8080/household/2/movement/20180319
